@@ -23,23 +23,34 @@
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex gap-4">
+                        <x-navbar />
+
+                        <x-card padding="p-6" class="bg-white sm:rounded-lg flex-initial w-full">
+                            @if (isset($header))
+                                <x-slot name="header">
+                                    <div class="px-7 py-4 border-b">
+                                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                            {{ $header }}
+                                        </h2>
+                                    </div>
+                                </x-slot>
+                            @endif
+
+                            {{ $slot }}
+                        </x-card>
+                    </div>
+                </div>
             </main>
         </div>
 
         @stack('modals')
 
         @livewireScripts
+        @wireUiScripts
+        <script src="//unpkg.com/alpinejs" defer></script>
     </body>
 </html>
