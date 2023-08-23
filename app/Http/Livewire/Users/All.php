@@ -21,6 +21,7 @@ class All extends Component
     protected $listeners = [
         'users::trashed' => '$refresh',
         'users::recovered' => '$refresh',
+        'users::deleted' => '$refresh',
     ];
 
     public function render()

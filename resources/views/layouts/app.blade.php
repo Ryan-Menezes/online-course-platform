@@ -26,7 +26,7 @@
             <!-- Page Content -->
             <main>
                 <div class="py-12">
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex gap-4">
+                    <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8 flex gap-4">
                         <x-navbar />
 
                         <x-card padding="p-6" class="bg-white sm:rounded-lg flex-initial w-full">

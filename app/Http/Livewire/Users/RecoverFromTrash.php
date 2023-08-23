@@ -24,7 +24,6 @@ class RecoverFromTrash extends Component
             'description' => 'Do you want to recover this user from trash?',
             'acceptLabel' => 'Yes, i do',
             'method'      => 'recoverFromTrash',
-            'params'      => 'Saved',
         ]);
     }
 
@@ -34,9 +33,6 @@ class RecoverFromTrash extends Component
 
         $this->emitTo(All::class, 'users::recovered');
 
-        $this->notification()->success(
-            'User recovered from trash success',
-            'You can move to trash it if you want'
-        );
+        $this->notification()->success('User recovered from trash success');
     }
 }

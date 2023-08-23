@@ -63,7 +63,7 @@
                                 <x-dropdown.item icon="pencil" label="Edit" />
 
                                 @if ($user->deleted_at)
-                                    <x-dropdown.item icon="trash" label="Delete" wire:click="delete" />
+                                    <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />
                                     <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
                                 @else
                                     <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />

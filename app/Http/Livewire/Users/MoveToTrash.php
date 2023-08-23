@@ -24,7 +24,6 @@ class MoveToTrash extends Component
             'description' => 'Do you want to move this user to trash?',
             'acceptLabel' => 'Yes, i do',
             'method'      => 'moveToTrash',
-            'params'      => 'Saved',
         ]);
     }
 
@@ -34,9 +33,6 @@ class MoveToTrash extends Component
 
         $this->emitTo(All::class, 'users::trashed');
 
-        $this->notification()->success(
-            'User moved to trash success',
-            'You can recover it if you want'
-        );
+        $this->notification()->success('User moved to trash success');
     }
 }
