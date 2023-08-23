@@ -49,6 +49,8 @@
 
         @stack('modals')
 
+        <x-notifications position="top-right" />
+
         @livewireScripts
         @wireUiScripts
         <script src="//unpkg.com/alpinejs" defer></script>

@@ -64,7 +64,7 @@
 
                                 @if ($user->deleted_at)
                                     <x-dropdown.item icon="trash" label="Delete" wire:click="delete" />
-                                    <x-dropdown.item icon="refresh" label="Recover from trash" wire:click="delete" />
+                                    <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
                                 @else
                                     <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
                                 @endif
