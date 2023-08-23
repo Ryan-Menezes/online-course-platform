@@ -41,8 +41,9 @@
             <tbody>
                 @foreach($this->users as $user)
                     <tr class="bg-white border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $user->name }}
+                        <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-5">
+                            <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
+                            <span>{{ $user->name }}</span>
                         </x-table.td>
                         <x-table.td>
                             {{ $user->email }}
@@ -65,7 +66,7 @@
                                     <x-dropdown.item icon="trash" label="Delete" wire:click="delete" />
                                     <x-dropdown.item icon="refresh" label="Recover from trash" wire:click="delete" />
                                 @else
-                                    <livewire:users.move-to-trash :key="$user->id" :user="$user" />
+                                    <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
                                 @endif
                             </x-dropdown>
                         </x-table.td>
