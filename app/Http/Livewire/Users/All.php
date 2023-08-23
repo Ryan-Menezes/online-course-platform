@@ -5,16 +5,21 @@ namespace App\Http\Livewire\Users;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use WireUi\Traits\Actions;
 
 class All extends Component
 {
-    use Actions, WithPagination;
+    use WithPagination;
 
-    public string $search = '';
+    public $filter = null;
+
+    public $search = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
+    ];
+
+    protected $listeners = [
+        'users::trashed' => '$refresh',
     ];
 
     public function render()
@@ -27,18 +32,24 @@ class All extends Component
         $this->resetPage();
     }
 
-    public function getUsersProperty()
+    public function updatingFilter()
     {
-        return User::query()->when($this->search, function ($query) {
-            $query->where('name', 'LIKE', "%{$this->search}%");
-        })->paginate(10);
+        $this->resetPage();
     }
 
-    public function moveToTrash()
+    public function getUsersProperty()
     {
-        $this->dialog()->success(
-            'Profile saved',
-            'Your profile was successfully saved'
-        );
+        return User::query()
+            ->when($this->search, function ($query) {
+                $query->where('name', 'LIKE', "%{$this->search}%");
+                $query->orWhere('email', 'LIKE', "%{$this->search}%");
+            })
+            ->when(!$this->filter, function ($query) {
+                $query->withTrashed();
+            })
+            ->when($this->filter === 'trash', function ($query) {
+                $query->onlyTrashed();
+            })
+            ->paginate(10);
     }
 }

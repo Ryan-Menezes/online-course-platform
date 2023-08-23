@@ -5,55 +5,74 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            <x-dropdown align="left">
-                <x-slot name="trigger">
-                    <x-button rightIcon="chevron-down" rounded label="Options" default />
-                </x-slot>
-
-                <x-dropdown.item icon="users" label="All" />
-                <x-dropdown.item icon="trash" label="Trash" />
-            </x-dropdown>
+            <x-select
+                label="Filter"
+                placeholder="Select one status"
+                :options="[
+                    ['name' => 'All',  'id' => 'all', 'description' => 'All users except those in the trash'],
+                    ['name' => 'Trash', 'id' => 'trash', 'description' => 'All users in the trash'],
+                ]"
+                option-label="name"
+                option-value="id"
+                wire:model="filter"
+            />
 
             <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
         </div>
 
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <x-table>
+            <x-table.thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <x-table.th>
                         Name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
+                    </x-table.th>
+                    <x-table.th>
                         E-mail
-                    </th>
-                    <th scope="col" class="px-6 py-3">
+                    </x-table.th>
+                    <x-table.th>
                         Role
-                    </th>
-                    <th scope="col" class="px-6 py-3"></th>
+                    </x-table.th>
+                    <x-table.th>
+                        Trashed
+                    </x-table.th>
+                    <x-table.th></x-table.th>
                 </tr>
-            </thead>
+            </x-table.thead>
             <tbody>
                 @foreach($this->users as $user)
                     <tr class="bg-white border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $user->name }}
-                        </th>
-                        <td class="px-6 py-4">
+                        </x-table.td>
+                        <x-table.td>
                             {{ $user->email }}
-                        </td>
-                        <td class="px-6 py-4">
+                        </x-table.td>
+                        <x-table.td>
                             <x-badge rounded positive label="Admin" />
-                        </td>
-                        <td class="px-6 py-4">
+                        </x-table.td>
+                        <x-table.td>
+                            @if ($user->deleted_at)
+                                <x-icon name="check-circle" class="w-5 h-5 text-green-600" />
+                            @else
+                                <x-icon name="x-circle" class="w-5 h-5 text-red-600" />
+                            @endif
+                        </x-table.td>
+                        <x-table.td>
                             <x-dropdown align="left">
                                 <x-dropdown.item icon="pencil" label="Edit" />
-                                <x-dropdown.item icon="trash" label="Move to trash" wire:click="moveToTrash" />
+
+                                @if ($user->deleted_at)
+                                    <x-dropdown.item icon="trash" label="Delete" wire:click="delete" />
+                                    <x-dropdown.item icon="refresh" label="Recover from trash" wire:click="delete" />
+                                @else
+                                    <livewire:users.move-to-trash :key="$user->id" :user="$user" />
+                                @endif
                             </x-dropdown>
-                        </td>
+                        </x-table.td>
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </x-table>
 
         <div class="mt-5">
             {{ $this->users->links() }}
