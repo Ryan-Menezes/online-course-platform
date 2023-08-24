@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('label');
             $table->text('description');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('permissions_roles', function (Blueprint $table) {
+        Schema::create('permission_role', function (Blueprint $table) {
             $table->foreignIdFor(Permission::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Role::class)->cascadeOnDelete()->cascadeOnUpdate();
         });
@@ -32,7 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions_roles');
+        Schema::dropIfExists('permission_role');
         Schema::dropIfExists('permissions');
     }
 };

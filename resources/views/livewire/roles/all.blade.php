@@ -27,6 +27,12 @@
                         Name
                     </x-table.th>
                     <x-table.th>
+                        Label
+                    </x-table.th>
+                    <x-table.th>
+                        Description
+                    </x-table.th>
+                    <x-table.th>
                         Created at
                     </x-table.th>
                     <x-table.th>
@@ -42,7 +48,13 @@
                 @foreach($this->roles as $role)
                     <tr class="bg-white border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <span>{{ $role->name }}</span>
+                            {{ $role->name }}
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $role->label }}
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $role->description }}
                         </x-table.td>
                         <x-table.td>
                             {{ $role->created_at }}

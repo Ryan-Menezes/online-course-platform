@@ -43,8 +43,9 @@ class All extends Component
     {
         return User::query()
             ->when($this->search, function ($query) {
-                $query->where('name', 'LIKE', "%{$this->search}%");
-                $query->orWhere('email', 'LIKE', "%{$this->search}%");
+                $query
+                    ->where('name', 'LIKE', "%{$this->search}%")
+                    ->orWhere('email', 'LIKE', "%{$this->search}%");
             })
             ->when(!$this->filter, function ($query) {
                 $query->withTrashed();

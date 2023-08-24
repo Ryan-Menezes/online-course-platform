@@ -10,6 +10,7 @@ class PermissionFactory extends Factory
     {
         return [
             'name' => fake()->sentence(),
+            'label' => fake()->sentence(),
             'description' => fake()->sentence(),
         ];
     }

@@ -15,4 +15,18 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function givePermission(string $permission): void
+    {
+        $permission = Permission::query()->whereName($permission)->firstOrFail();
+
+        $this->permissions()->attach($permission->id);
+    }
+
+    public function givePermissions(array $permissions): void
+    {
+        foreach ($permissions as $permission) {
+            $this->givePermission($permission);
+        }
+    }
 }

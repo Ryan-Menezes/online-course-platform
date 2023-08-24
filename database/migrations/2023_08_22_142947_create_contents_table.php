@@ -27,12 +27,12 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('contents_files', function (Blueprint $table) {
+        Schema::create('content_file', function (Blueprint $table) {
             $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class)->cascadeOnDelete()->cascadeOnUpdate();
         });
 
-        Schema::create('contents_viewed', function (Blueprint $table) {
+        Schema::create('content_viewed', function (Blueprint $table) {
             $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(User::class)->cascadeOnDelete()->cascadeOnUpdate();
         });
@@ -43,8 +43,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contents_files');
-        Schema::dropIfExists('contents_viewed');
+        Schema::dropIfExists('content_file');
+        Schema::dropIfExists('content_viewed');
         Schema::dropIfExists('contents');
     }
 };

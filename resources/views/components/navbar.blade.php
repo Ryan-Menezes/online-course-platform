@@ -7,7 +7,7 @@
             <x-navbar-item icon="document">Files</x-navbar-item>
             <x-navbar-item icon="academic-cap">Courses</x-navbar-item>
             <x-navbar-item route="roles" icon="identification">Roles</x-navbar-item>
-            <x-navbar-item icon="lock-closed">Permissions</x-navbar-item>
+            <x-navbar-item route="permissions" icon="lock-closed">Permissions</x-navbar-item>
             <x-navbar-item route="logout" icon="logout">Logout</x-navbar-item>
         </ul>
     </div>

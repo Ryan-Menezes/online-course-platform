@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Roles;
+namespace App\Http\Livewire\Permissions;
 
-use App\Models\Role;
+use App\Models\Permission;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,23 +10,15 @@ class All extends Component
 {
     use WithPagination;
 
-    public $filter = null;
-
     public $search = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
     ];
 
-    protected $listeners = [
-        'roles::trashed' => '$refresh',
-        'roles::recovered' => '$refresh',
-        'roles::deleted' => '$refresh',
-    ];
-
     public function render()
     {
-        return view('livewire.roles.all');
+        return view('livewire.permissions.all');
     }
 
     public function updatingSearch()
@@ -39,20 +31,14 @@ class All extends Component
         $this->resetPage();
     }
 
-    public function getRolesProperty()
+    public function getPermissionsProperty()
     {
-        return Role::query()
+        return Permission::query()
             ->when($this->search, function ($query) {
                 $query
                     ->where('name', 'LIKE', "%{$this->search}%")
                     ->orWhere('label', 'LIKE', "%{$this->search}%")
                     ->orWhere('description', 'LIKE', "%{$this->search}%");
-            })
-            ->when(!$this->filter, function ($query) {
-                $query->withTrashed();
-            })
-            ->when($this->filter === 'trash', function ($query) {
-                $query->onlyTrashed();
             })
             ->paginate(10);
     }
