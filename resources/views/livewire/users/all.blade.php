@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        {{ __('Users') }}
     </x-slot>
 
     <div class="relative">
@@ -33,6 +33,12 @@
                         Role
                     </x-table.th>
                     <x-table.th>
+                        Created at
+                    </x-table.th>
+                    <x-table.th>
+                        Updated at
+                    </x-table.th>
+                    <x-table.th>
                         Trashed
                     </x-table.th>
                     <x-table.th></x-table.th>
@@ -50,6 +56,12 @@
                         </x-table.td>
                         <x-table.td>
                             <x-badge rounded positive label="Admin" />
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $user->created_at }}
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $user->updated_at }}
                         </x-table.td>
                         <x-table.td>
                             @if ($user->deleted_at)

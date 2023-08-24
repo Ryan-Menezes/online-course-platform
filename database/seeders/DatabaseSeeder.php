@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             FileSeeder::class,
             CourseSeeder::class,
             VideoSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

@@ -1,3 +1,85 @@
 <div>
-    Roles
+    <x-slot name="header">
+        {{ __('Roles') }}
+    </x-slot>
+
+    <div class="relative">
+        <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
+            <x-select
+                label="Filter"
+                placeholder="Select one status"
+                :options="[
+                    ['name' => 'All',  'id' => 'all', 'description' => 'All roles except those in the trash'],
+                    ['name' => 'Trash', 'id' => 'trash', 'description' => 'All roles in the trash'],
+                ]"
+                option-label="name"
+                option-value="id"
+                wire:model="filter"
+            />
+
+            <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
+        </div>
+
+        <x-table>
+            <x-table.thead>
+                <tr>
+                    <x-table.th>
+                        Name
+                    </x-table.th>
+                    <x-table.th>
+                        Created at
+                    </x-table.th>
+                    <x-table.th>
+                        Updated at
+                    </x-table.th>
+                    <x-table.th>
+                        Trashed
+                    </x-table.th>
+                    <x-table.th></x-table.th>
+                </tr>
+            </x-table.thead>
+            <tbody>
+                @foreach($this->roles as $role)
+                    <tr class="bg-white border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <span>{{ $role->name }}</span>
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $role->created_at }}
+                        </x-table.td>
+                        <x-table.td>
+                            {{ $role->updated_at }}
+                        </x-table.td>
+                        <x-table.td>
+                            @if ($role->deleted_at)
+                                <x-icon name="check-circle" class="w-5 h-5 text-green-600" />
+                            @else
+                                <x-icon name="x-circle" class="w-5 h-5 text-red-600" />
+                            @endif
+                        </x-table.td>
+                        <x-table.td>
+                            <x-dropdown align="left">
+                                <x-dropdown.item icon="pencil" label="Edit" />
+
+                                @if ($role->deleted_at)
+                                    <livewire:roles.delete wire:key="delete-{{ $role->id }}" :role="$role" />
+                                    <livewire:roles.recover-from-trash wire:key="recover-from-trash-{{ $role->id }}" :role="$role" />
+                                @else
+                                    <livewire:roles.move-to-trash wire:key="move-to-trash-{{ $role->id }}" :role="$role" />
+                                @endif
+                            </x-dropdown>
+                        </x-table.td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </x-table>
+
+        <div class="mt-5">
+            {{ $this->roles->links() }}
+        </div>
+    </div>
+
+    @push('modals')
+        <x-dialog z-index="z-50" blur="md" align="center" />
+    @endpush
 </div>
