@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Video;
+use App\Models\Content;
 use Illuminate\Auth\Access\Response;
 
-class VideoPolicy
+class ContentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class VideoPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Video $video): bool
+    public function view(User $user, Content $content): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class VideoPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Video $video): bool
+    public function update(User $user, Content $content): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class VideoPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Video $video): bool
+    public function delete(User $user, Content $content): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class VideoPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Video $video): bool
+    public function restore(User $user, Content $content): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class VideoPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Video $video): bool
+    public function forceDelete(User $user, Content $content): bool
     {
         //
     }

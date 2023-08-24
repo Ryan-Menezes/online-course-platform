@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Course extends Model
+class Content extends Model
 {
     use HasFactory;
 
@@ -16,13 +16,13 @@ class Course extends Model
         return $this->belongsTo(File::class, 'file_thumb_id');
     }
 
-    public function certificate(): BelongsTo
+    public function video(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'file_certificate_id');
+        return $this->belongsTo(File::class, 'file_video_id');
     }
 
-    public function contents(): HasMany
+    public function course(): HasOne
     {
-        return $this->hasMany(Content::class);
+        return $this->hasOne(Course::class);
     }
 }

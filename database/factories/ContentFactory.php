@@ -6,7 +6,7 @@ use App\Models\Course;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VideoFactory extends Factory
+class ContentFactory extends Factory
 {
     public function definition(): array
     {

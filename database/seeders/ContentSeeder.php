@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Video;
+use App\Models\Content;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class VideoSeeder extends Seeder
+class ContentSeeder extends Seeder
 {
     public function run(): void
     {
-        Video::factory(10)->create();
+        Content::factory(10)->create();
     }
 }

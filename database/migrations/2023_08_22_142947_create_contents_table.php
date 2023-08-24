@@ -3,7 +3,7 @@
 use App\Models\Course;
 use App\Models\File;
 use App\Models\User;
-use App\Models\Video;
+use App\Models\Content;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Course::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
@@ -27,13 +27,13 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('files_videos', function (Blueprint $table) {
-            $table->foreignIdFor(Video::class)->cascadeOnDelete()->cascadeOnUpdate();
+        Schema::create('contents_files', function (Blueprint $table) {
+            $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class)->cascadeOnDelete()->cascadeOnUpdate();
         });
 
-        Schema::create('videos_viewed', function (Blueprint $table) {
-            $table->foreignIdFor(Video::class)->cascadeOnDelete()->cascadeOnUpdate();
+        Schema::create('contents_viewed', function (Blueprint $table) {
+            $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(User::class)->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
@@ -43,8 +43,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('files_videos');
-        Schema::dropIfExists('videos_viewed');
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('contents_files');
+        Schema::dropIfExists('contents_viewed');
+        Schema::dropIfExists('contents');
     }
 };
