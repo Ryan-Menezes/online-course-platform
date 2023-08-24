@@ -52,9 +52,7 @@
         @endif
 
         <div class="flex items-center mt-5">
-            <x-button wire:click="confirmLogout" wire:loading.attr="disabled">
-                {{ __('Log Out Other Browser Sessions') }}
-            </x-button>
+            <x-button type="submit" label="Log Out Other Browser Sessions" rounded primary wire:click="confirmLogout" wire:loading.attr="disabled" />
 
             <x-action-message class="ml-3" on="loggedOut">
                 {{ __('Done.') }}
@@ -87,11 +85,9 @@
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-button class="ml-3"
+                <x-button type="submit" label="Log Out Other Browser Sessions" primary class="ml-3"
                             wire:click="logoutOtherBrowserSessions"
-                            wire:loading.attr="disabled">
-                    {{ __('Log Out Other Browser Sessions') }}
-                </x-button>
+                            wire:loading.attr="disabled" />
             </x-slot>
         </x-dialog-modal>
     </x-slot>

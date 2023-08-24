@@ -48,7 +48,7 @@
                 @foreach($this->users as $user)
                     <tr class="bg-white border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <x-table.td class="font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-5">
-                            <img class="h-8 w-8 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
+                            <x-avatar sm src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" />
                             <span>{{ $user->name }}</span>
                         </x-table.td>
                         <x-table.td>
