@@ -17,6 +17,8 @@
                 wire:model="filter"
             />
 
+            <livewire:users.create />
+
             <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
         </div>
 

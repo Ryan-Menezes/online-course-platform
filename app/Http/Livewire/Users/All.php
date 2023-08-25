@@ -19,6 +19,7 @@ class All extends Component
     ];
 
     protected $listeners = [
+        'users::created' => '$refresh',
         'users::trashed' => '$refresh',
         'users::recovered' => '$refresh',
         'users::deleted' => '$refresh',
