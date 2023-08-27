@@ -3,18 +3,30 @@
 namespace App\Http\Livewire\Users;
 
 use App\Actions\Fortify\CreateNewUser;
-use Laravel\Jetstream\Jetstream;
+use App\Actions\Fortify\PasswordValidationRules;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
 class Create extends Component
 {
-    use Actions;
+    use Actions, PasswordValidationRules;
 
+    public $createModal = null;
     public ?string $name = null;
     public ?string $email = null;
+    public ?string $role_id = null;
     public ?string $password = null;
     public ?string $password_confirmation = null;
+
+    protected function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'role_id' => ['required', 'exists:roles,id'],
+            'password' => $this->passwordRules(),
+        ];
+    }
 
     public function render()
     {
@@ -23,16 +35,16 @@ class Create extends Component
 
     public function save()
     {
+        $data = $this->validate();
+
         (new CreateNewUser())->create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password,
+            ...$data,
             'password_confirmation' => $this->password_confirmation,
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature()
+            'terms' => true,
         ]);
 
         $this->emitTo(All::class, 'users::created');
-
         $this->notification()->success('User created success');
+        $this->reset();
     }
 }

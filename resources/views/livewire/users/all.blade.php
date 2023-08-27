@@ -17,9 +17,11 @@
                 wire:model="filter"
             />
 
-            <livewire:users.create />
+            <div class="flex items-center justify-end gap-5">
+                <livewire:users.create />
 
-            <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
+                <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
+            </div>
         </div>
 
         <x-table>
@@ -57,7 +59,7 @@
                             {{ $user->email }}
                         </x-table.td>
                         <x-table.td>
-                            <x-badge rounded positive label="Admin" />
+                            <x-badge rounded positive label="{{ $user->role->label }}" />
                         </x-table.td>
                         <x-table.td>
                             {{ $user->created_at }}

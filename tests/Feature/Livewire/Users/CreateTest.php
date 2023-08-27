@@ -2,6 +2,8 @@
 
 use App\Http\Livewire\Users\All;
 use App\Http\Livewire\Users\Create;
+use App\Models\Role;
+use App\Models\User;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Livewire;
 
@@ -14,9 +16,12 @@ test('component can render', function () {
 });
 
 it('should create a new user', function () {
+    $role = Role::factory()->create();
+
     Livewire::test(Create::class)
         ->set('name', 'John Doe')
         ->set('email', 'john@mail.com')
+        ->set('role_id', $role->id)
         ->set('password', '12345678')
         ->set('password_confirmation', '12345678')
         ->call('save')
@@ -72,11 +77,44 @@ test('the user email should be a valid email', function () {
 });
 
 test('the user email should be less than 191 characters long', function () {
+    User::factory()->create(['email' => 'john@mail.com']);
+
     Livewire::test(Create::class)
-        ->set('email', str('a')->repeat(192))
+        ->set('email', 'john@mail.com')
         ->call('save')
         ->assertHasErrors([
-            'email' => 'max:191',
+            'email' => 'unique:users',
+        ]);
+
+    assertDatabaseCount('users', 1);
+});
+
+test('the user email should be unique', function () {
+    Livewire::test(Create::class)
+        ->call('save')
+        ->assertHasErrors([
+            'email' => 'required',
+        ]);
+
+    assertDatabaseCount('users', 0);
+});
+
+test('the role id should be required', function () {
+    Livewire::test(Create::class)
+        ->call('save')
+        ->assertHasErrors([
+            'role_id' => 'required',
+        ]);
+
+    assertDatabaseCount('users', 0);
+});
+
+test('the role id should exist on roles table', function () {
+    Livewire::test(Create::class)
+        ->set('role_id', 'invalid_role_id')
+        ->call('save')
+        ->assertHasErrors([
+            'role_id' => 'exists:roles,id',
         ]);
 
     assertDatabaseCount('users', 0);

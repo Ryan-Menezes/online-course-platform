@@ -54,6 +54,7 @@ class All extends Component
             ->when($this->filter === 'trash', function ($query) {
                 $query->onlyTrashed();
             })
+            ->latest()
             ->paginate(10);
     }
 }

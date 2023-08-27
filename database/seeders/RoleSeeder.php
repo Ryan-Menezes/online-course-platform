@@ -64,7 +64,7 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($roles as $name => $data) {
-            $role = Role::query()->create([
+            $role = Role::query()->firstOrCreate([
                 'name' => $name,
                 'label' => $data['label'],
                 'description' => "{$data['label']} of the system",

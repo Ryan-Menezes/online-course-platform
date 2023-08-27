@@ -1,29 +1,25 @@
 <div>
-    <x-modal.card title="Edit Customer" blur wire:model.defer="cardModal">
+    <x-button primary rounded onclick="$openModal('createModal')">Novo</x-button>
+
+    <x-modal.card title="Create User" align="center" blur wire:model.defer="createModal">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <x-input label="Name" placeholder="Your full name" />
-            <x-input label="Phone" placeholder="USA phone" />
+            <x-input type="text" label="Name" placeholder="Name" name="name" id="name" wire:model.defer="name" />
+
+            <x-input type="email" label="Email" placeholder="example@mail.com" name="email" id="email" icon="mail" wire:model.defer="email" />
 
             <div class="col-span-1 sm:col-span-2">
-                <x-input label="Email" placeholder="example@mail.com" />
+                <x-select-role wire:model.defer="role_id" />
             </div>
 
-            <div class="col-span-1 sm:col-span-2 cursor-pointer bg-gray-100 rounded-xl shadow-md h-72 flex items-center justify-center">
-                <div class="flex flex-col items-center justify-center">
-                    <x-icon name="cloud-upload" class="w-16 h-16 text-blue-600" />
-                    <p class="text-blue-600">Click or drop files here</p>
-                </div>
-            </div>
+            <x-inputs.password label="Password" placeholder="Password" name="password" id="password" icon="lock-closed" wire:model.defer="password" />
+
+            <x-inputs.password label="Password Confirmation" placeholder="Password" name="password_confirmation" id="password" icon="lock-closed" wire:model.defer="password_confirmation" />
         </div>
 
         <x-slot name="footer">
-            <div class="flex justify-between gap-x-4">
-                <x-button flat negative label="Delete" wire:click="delete" />
-
-                <div class="flex">
-                    <x-button flat label="Cancel" x-on:click="close" />
-                    <x-button primary label="Save" wire:click="save" />
-                </div>
+            <div class="flex justify-end gap-x-4">
+                <x-button flat label="Cancel" x-on:click="close" />
+                <x-button primary label="Save" wire:click="save" />
             </div>
         </x-slot>
     </x-modal.card>

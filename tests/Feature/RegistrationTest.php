@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
@@ -40,6 +41,8 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        Role::factory()->create(['name' => 'user']);
+
         if (! Features::enabled(Features::registration())) {
             $this->markTestSkipped('Registration support is not enabled.');
 
