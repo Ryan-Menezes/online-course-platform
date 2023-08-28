@@ -46,4 +46,20 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function hasPermission(string $permissionName): bool
+    {
+        foreach ($this->role->permissions as $permission) {
+            if ($permission->name === $permissionName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role->name === 'admin';
+    }
 }

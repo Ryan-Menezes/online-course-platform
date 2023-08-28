@@ -13,8 +13,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/users', UsersAll::class)->name('users');
-    Route::get('/users/{user}', UserEditController::class)->name('users.edit');
-    Route::get('/roles', RolesAll::class)->name('roles');
-    Route::get('/permissions', PermissionsAll::class)->name('permissions');
+    Route::get('/users', UsersAll::class)->middleware('can:users-view')->name('users');
+    Route::get('/users/{user}', UserEditController::class)->middleware('can:users-edit')->name('users.edit');
+    Route::get('/roles', RolesAll::class)->middleware('can:roles-view')->name('roles');
+    Route::get('/permissions', PermissionsAll::class)->middleware('can:permissions-view')->name('permissions');
 });
