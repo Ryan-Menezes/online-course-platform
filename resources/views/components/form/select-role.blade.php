@@ -1,6 +1,6 @@
 <x-select
     label="Role"
-    placeholder="Select some role"
+    placeholder="{{ ($role?->label ?? 'Select some role') }}"
     :options="$roles()"
     option-label="label"
     option-value="id"

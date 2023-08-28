@@ -5,18 +5,11 @@
         <x-input type="email" label="Email" placeholder="example@mail.com" icon="mail" wire:model.defer="email" />
 
         <div class="col-span-1 sm:col-span-2">
-            <x-select-role wire:model.defer="role_id" />
+            <x-form.select-role :role="$user?->role" wire:model.defer="role_id" />
         </div>
 
         <x-inputs.password label="Password" placeholder="Password" icon="lock-closed" wire:model.defer="password" />
 
         <x-inputs.password label="Password Confirmation" placeholder="Password" icon="lock-closed" wire:model.defer="password_confirmation" />
     </div>
-
-    <x-slot name="footer">
-        <div class="flex justify-end gap-x-4">
-            <x-button flat label="Cancel" x-on:click="close" />
-            <x-button type="submit" form="form-user" primary label="Save" />
-        </div>
-    </x-slot>
 </form>
