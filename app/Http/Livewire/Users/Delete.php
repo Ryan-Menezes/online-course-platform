@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
+use App\Actions\Jetstream\DeleteUser;
 use App\Models\User;
 use Livewire\Component;
 use WireUi\Traits\Actions;
@@ -29,7 +30,7 @@ class Delete extends Component
 
     public function delete()
     {
-        $this->user->forceDelete();
+        (new DeleteUser())->delete($this->user);
 
         $this->emitTo(All::class, 'users::deleted');
 

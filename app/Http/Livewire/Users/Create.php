@@ -22,7 +22,7 @@ class Create extends Component
     {
         return [
             'name' => ['required', 'string', 'max:191'],
-            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users,email'],
             'role_id' => ['required', 'exists:roles,id'],
             'password' => $this->passwordRules(),
         ];
