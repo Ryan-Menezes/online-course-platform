@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Users\UserEditController;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users\All as UsersAll;
 use App\Http\Livewire\Roles\All as RolesAll;
@@ -13,6 +14,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/users', UsersAll::class)->name('users');
+    Route::get('/users/{user}', UserEditController::class)->name('users.edit');
     Route::get('/roles', RolesAll::class)->name('roles');
     Route::get('/permissions', PermissionsAll::class)->name('permissions');
 });

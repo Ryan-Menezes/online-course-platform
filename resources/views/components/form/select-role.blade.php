@@ -1,8 +1,12 @@
 <x-select
     label="Role"
-    placeholder="{{ ($role?->label ?? 'Select some role') }}"
+    placeholder="Select some role"
     :options="$roles()"
     option-label="label"
     option-value="id"
     {{ $attributes }}
-/>
+>
+    @foreach($roles() as $role)
+        <x-select.option label="{{ $role['label'] }}" value="{{ $role['id'] }}" />
+    @endforeach
+</x-select>

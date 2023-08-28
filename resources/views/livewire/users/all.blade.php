@@ -76,7 +76,7 @@
                         </x-table.td>
                         <x-table.td>
                             <x-dropdown align="left">
-                                <x-dropdown.item icon="pencil" label="Edit" />
+                                <x-dropdown.item icon="pencil" label="Edit" href="{{ route('users.edit', $user) }}" />
 
                                 @if ($user->deleted_at)
                                     <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />

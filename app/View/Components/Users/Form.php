@@ -9,9 +9,6 @@ use Illuminate\View\Component;
 
 class Form extends Component
 {
-    public function __construct(public ?User $user = null)
-    {}
-
     public function render(): View|Closure|string
     {
         return view('components.users.form');

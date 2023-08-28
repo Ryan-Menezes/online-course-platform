@@ -5,7 +5,7 @@
         <x-input type="email" label="Email" placeholder="example@mail.com" icon="mail" wire:model.defer="email" />
 
         <div class="col-span-1 sm:col-span-2">
-            <x-form.select-role :role="$user?->role" wire:model.defer="role_id" />
+            <x-form.select-role wire:model.defer="role_id" />
         </div>
 
         <x-inputs.password label="Password" placeholder="Password" icon="lock-closed" wire:model.defer="password" />
