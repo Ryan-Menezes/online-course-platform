@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Rules\Password;
@@ -11,7 +12,7 @@ use WireUi\Traits\Actions;
 
 class Edit extends Component
 {
-    use Actions;
+    use Actions, AuthorizesRequests;
 
     public User $user;
 
@@ -23,6 +24,8 @@ class Edit extends Component
 
     public function mount(User $user)
     {
+        $this->authorize('update', $user);
+
         $this->user = $user;
         $this->name = $this->user->name;
         $this->email = $this->user->email;

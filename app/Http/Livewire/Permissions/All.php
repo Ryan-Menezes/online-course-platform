@@ -3,18 +3,24 @@
 namespace App\Http\Livewire\Permissions;
 
 use App\Models\Permission;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class All extends Component
 {
-    use WithPagination;
+    use WithPagination, AuthorizesRequests;
 
     public $search = '';
 
     protected $queryString = [
         'search' => ['except' => ''],
     ];
+
+    public function mount()
+    {
+        $this->authorize('viewAny', auth()->user());
+    }
 
     public function render()
     {

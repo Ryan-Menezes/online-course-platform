@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class All extends Component
 {
-    use WithPagination;
+    use WithPagination, AuthorizesRequests;
 
     public $filter = null;
 
@@ -24,6 +25,11 @@ class All extends Component
         'users::recovered' => '$refresh',
         'users::deleted' => '$refresh',
     ];
+
+    public function mount()
+    {
+        $this->authorize('viewAny', auth()->user());
+    }
 
     public function render()
     {

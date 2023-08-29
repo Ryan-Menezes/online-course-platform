@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\PasswordValidationRules;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -35,6 +36,10 @@ class Create extends Component
 
     public function save()
     {
+        if (!$this->isAuthorizable()) {
+            return;
+        }
+
         $data = $this->validate();
 
         (new CreateNewUser())->create([
@@ -46,5 +51,16 @@ class Create extends Component
         $this->emitTo(All::class, 'users::created');
         $this->notification()->success('User created success');
         $this->reset();
+    }
+
+    private function isAuthorizable()
+    {
+        if (Gate::allows('create', auth()->user())) {
+            return true;
+        }
+
+        $this->dialog()->error('You do not have authorization to perform this action');
+
+        return false;
     }
 }

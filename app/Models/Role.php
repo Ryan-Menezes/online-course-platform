@@ -18,7 +18,13 @@ class Role extends Model
 
     public function givePermission(string $permission): void
     {
-        $permission = Permission::query()->whereName($permission)->firstOrFail();
+        $permission = Permission::query()->firstOrCreate([
+            'name' => $permission,
+        ], [
+            'name' => $permission,
+            'label' => $permission,
+            'description' => $permission,
+        ]);
 
         $this->permissions()->attach($permission->id);
     }

@@ -3,17 +3,40 @@
 use App\Http\Livewire\Users\Edit;
 use App\Models\Role;
 use App\Models\User;
+use App\Providers\AppServiceProvider;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Livewire;
 
+use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
+
+beforeEach(function () {
+    $user = User::factory()->create();
+    $user->role->givePermission('users-edit');
+
+    (new AppServiceProvider(app()))->boot();
+
+    actingAs($user);
+});
 
 test('component can render', function () {
     $user = User::factory()->create();
 
     Livewire::test(Edit::class, ['user' => $user])
         ->assertStatus(200);
+});
+
+test('component cannot render if the user does not have authorization', function () {
+    $userLog = User::factory()->create();
+    $userLog->role->permissions()->sync([]);
+
+    actingAs($userLog);
+
+    $user = User::factory()->create();
+
+    Livewire::test(Edit::class, ['user' => $user])
+        ->assertForbidden();
 });
 
 it('should edit a user', function () {
@@ -29,7 +52,7 @@ it('should edit a user', function () {
         ->set('role_id', $role->id)
         ->call('save');
 
-    assertDatabaseCount('users', 1);
+    assertDatabaseCount('users', 2);
     assertDatabaseHas('users', [
         'name' => 'John Doe',
         'email' => 'john@mail.com',

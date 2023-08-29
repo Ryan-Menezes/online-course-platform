@@ -70,15 +70,19 @@
                             @endif
                         </x-table.td>
                         <x-table.td>
-                            <x-dropdown align="left">
-                                <x-dropdown.item icon="pencil" label="Edit" />
+                            <x-dropdown align="right">
+                                @can('roles-edit')
+                                    <x-dropdown.item icon="pencil" label="Edit" />
+                                @endcan
 
-                                @if ($role->deleted_at)
-                                    <livewire:roles.delete wire:key="delete-{{ $role->id }}" :role="$role" />
-                                    <livewire:roles.recover-from-trash wire:key="recover-from-trash-{{ $role->id }}" :role="$role" />
-                                @else
-                                    <livewire:roles.move-to-trash wire:key="move-to-trash-{{ $role->id }}" :role="$role" />
-                                @endif
+                                @can('roles-view')
+                                    @if ($role->deleted_at)
+                                        <livewire:roles.delete wire:key="delete-{{ $role->id }}" :role="$role" />
+                                        <livewire:roles.recover-from-trash wire:key="recover-from-trash-{{ $role->id }}" :role="$role" />
+                                    @else
+                                        <livewire:roles.move-to-trash wire:key="move-to-trash-{{ $role->id }}" :role="$role" />
+                                    @endif
+                                @endcan
                             </x-dropdown>
                         </x-table.td>
                     </tr>

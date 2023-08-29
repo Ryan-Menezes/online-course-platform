@@ -1,4 +1,8 @@
 <div>
+    <x-slot name="header">
+        {{ __('Edit User') }}
+    </x-slot>
+
     <x-users.form />
 
     <div class="flex justify-end gap-x-4 mt-6">

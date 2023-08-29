@@ -4,11 +4,23 @@ use App\Http\Livewire\Users\All;
 use App\Http\Livewire\Users\Create;
 use App\Models\Role;
 use App\Models\User;
+use App\Providers\AppServiceProvider;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Livewire;
 
+use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+
+beforeEach(function () {
+    $user = User::factory()->create();
+    $user->role->givePermission('users-create');
+
+    (new AppServiceProvider(app()))->boot();
+
+    actingAs($user);
+});
 
 test('component can render', function () {
     Livewire::test(Create::class)
@@ -27,8 +39,31 @@ it('should create a new user', function () {
         ->call('save')
         ->assertEmittedTo(All::class, 'users::created');
 
-    assertDatabaseCount('users', 1);
+    assertDatabaseCount('users', 2);
     assertDatabaseHas('users', [
+        'name' => 'John Doe',
+        'email' => 'john@mail.com',
+    ]);
+});
+
+it('should not create a new user if the user does not have authorization', function () {
+    $userLog = User::factory()->create();
+    $userLog->role->permissions()->sync([]);
+
+    actingAs($userLog);
+
+    $role = Role::factory()->create();
+
+    Livewire::test(Create::class)
+        ->set('name', 'John Doe')
+        ->set('email', 'john@mail.com')
+        ->set('role_id', $role->id)
+        ->set('password', '12345678')
+        ->set('password_confirmation', '12345678')
+        ->call('save');
+
+    assertDatabaseCount('users', 2);
+    assertDatabaseMissing('users', [
         'name' => 'John Doe',
         'email' => 'john@mail.com',
     ]);
@@ -41,7 +76,7 @@ test('the user name should be required', function () {
             'name' => 'required',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user name should be less than 191 characters long', function () {
@@ -52,7 +87,7 @@ test('the user name should be less than 191 characters long', function () {
             'name' => 'max:191',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user email should be required', function () {
@@ -62,7 +97,7 @@ test('the user email should be required', function () {
             'email' => 'required',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user email should be a valid email', function () {
@@ -73,7 +108,7 @@ test('the user email should be a valid email', function () {
             'email' => 'email',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user email should be less than 191 characters long', function () {
@@ -84,7 +119,7 @@ test('the user email should be less than 191 characters long', function () {
             'email' => 'max:191',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user email should be unique', function () {
@@ -97,7 +132,7 @@ test('the user email should be unique', function () {
             'email' => 'unique:users',
         ]);
 
-    assertDatabaseCount('users', 1);
+    assertDatabaseCount('users', 2);
 });
 
 test('the role id should be required', function () {
@@ -107,7 +142,7 @@ test('the role id should be required', function () {
             'role_id' => 'required',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the role id should exist on roles table', function () {
@@ -118,7 +153,7 @@ test('the role id should exist on roles table', function () {
             'role_id' => 'exists:roles,id',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user password should be required', function () {
@@ -128,7 +163,7 @@ test('the user password should be required', function () {
             'password' => 'required',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user password should be greater than 8 characters long', function () {
@@ -139,7 +174,7 @@ test('the user password should be greater than 8 characters long', function () {
             'password' => Password::class,
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });
 
 test('the user password should be confirmed', function () {
@@ -150,5 +185,5 @@ test('the user password should be confirmed', function () {
             'password' => 'confirmed',
         ]);
 
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
 });

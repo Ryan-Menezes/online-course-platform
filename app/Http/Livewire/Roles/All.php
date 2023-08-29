@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Roles;
 
 use App\Models\Role;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class All extends Component
 {
-    use WithPagination;
+    use WithPagination, AuthorizesRequests;
 
     public $filter = null;
 
@@ -23,6 +24,11 @@ class All extends Component
         'roles::recovered' => '$refresh',
         'roles::deleted' => '$refresh',
     ];
+
+    public function mount()
+    {
+        $this->authorize('viewAny', auth()->user());
+    }
 
     public function render()
     {

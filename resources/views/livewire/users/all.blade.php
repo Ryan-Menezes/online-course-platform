@@ -18,7 +18,9 @@
             />
 
             <div class="flex items-center justify-end gap-5">
-                <livewire:users.create />
+                @can('users-create')
+                    <livewire:users.create />
+                @endcan
 
                 <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
             </div>
@@ -75,15 +77,20 @@
                             @endif
                         </x-table.td>
                         <x-table.td>
-                            <x-dropdown align="left">
-                                <x-dropdown.item icon="pencil" label="Edit" href="{{ route('users.edit', $user) }}" />
+                            <x-dropdown align="right">
+                                @can('users-edit')
+                                    <x-dropdown.item icon="pencil" label="Edit" href="{{ route('users.edit', $user) }}" />
+                                @endcan
 
-                                @if ($user->deleted_at)
-                                    <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />
-                                    <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
-                                @else
-                                    <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
-                                @endif
+                                @can('users-delete')
+                                    @if ($user->deleted_at)
+
+                                        <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />
+                                        <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
+                                    @else
+                                        <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
+                                    @endif
+                                @endcan
                             </x-dropdown>
                         </x-table.td>
                     </tr>
