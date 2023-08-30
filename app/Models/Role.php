@@ -35,4 +35,29 @@ class Role extends Model
             $this->givePermission($permission);
         }
     }
+
+    public function revokePermission(string $permission): void
+    {
+        $permission = Permission::query()->firstOrCreate([
+            'name' => $permission,
+        ], [
+            'name' => $permission,
+            'label' => $permission,
+            'description' => $permission,
+        ]);
+
+        $this->permissions()->detach($permission->id);
+    }
+
+    public function revokePermissions(array $permissions): void
+    {
+        foreach ($permissions as $permission) {
+            $this->removePermission($permission);
+        }
+    }
+
+    public function clearPermissions(): void
+    {
+        $this->permissions()->sync([]);
+    }
 }

@@ -3,6 +3,7 @@
     placeholder="Select some role"
     option-label="label"
     option-value="id"
+    icon="identification"
     {{ $attributes }}
 >
     @foreach($roles() as $role)

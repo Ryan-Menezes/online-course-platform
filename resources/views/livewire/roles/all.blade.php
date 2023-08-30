@@ -78,7 +78,7 @@
                         <x-table.td>
                             <x-dropdown align="right">
                                 @can('roles-edit')
-                                    <x-dropdown.item icon="pencil" label="Edit" />
+                                    <x-dropdown.item icon="pencil" label="Edit" href="{{ route('roles.edit', $role) }}" />
                                 @endcan
 
                                 @can('roles-view')

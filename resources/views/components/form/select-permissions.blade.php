@@ -4,6 +4,7 @@
     multiselect
     option-label="label"
     option-value="name"
+    icon="lock-closed"
     {{ $attributes }}
 >
     @foreach($permissions() as $permission)
