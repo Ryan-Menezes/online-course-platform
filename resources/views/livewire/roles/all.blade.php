@@ -17,7 +17,13 @@
                 wire:model="filter"
             />
 
-            <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
+            <div class="flex items-center justify-end gap-5">
+                @can('roles-create')
+                    <livewire:roles.create />
+                @endcan
+
+                <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
+            </div>
         </div>
 
         <x-table>

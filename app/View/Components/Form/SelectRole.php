@@ -9,9 +9,9 @@ use Illuminate\View\Component;
 
 class SelectRole extends Component
 {
-    public function roles(): array
+    public function roles()
     {
-        return Role::query()->select('id', 'label')->get()->toArray();
+        return Role::query()->get();
     }
 
     public function render(): View|Closure|string

@@ -20,6 +20,7 @@ class All extends Component
     ];
 
     protected $listeners = [
+        'roles::created' => '$refresh',
         'roles::trashed' => '$refresh',
         'roles::recovered' => '$refresh',
         'roles::deleted' => '$refresh',
