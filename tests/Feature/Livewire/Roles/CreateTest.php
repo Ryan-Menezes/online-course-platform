@@ -44,7 +44,7 @@ it('should create a new role', function () {
     ]);
 });
 
-it('should not create a new role if the role does not have authorization', function () {
+it('should not create a new role if the user does not have authorization', function () {
     $user = User::factory()->create();
     $user->role->permissions()->sync([]);
 

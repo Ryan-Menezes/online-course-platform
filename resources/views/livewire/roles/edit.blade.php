@@ -6,6 +6,6 @@
     <x-roles.form />
 
     <div class="flex justify-end gap-x-4 mt-6">
-        <x-button type="submit" form="form-role" primary label="Save" />
+        <x-button type="submit" form="form-role" primary label="Save" wire:loading.attr="disabled" wire:target="save" />
     </div>
 </div>
