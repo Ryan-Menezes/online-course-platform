@@ -10,7 +10,7 @@
             @endcan
 
             @can('files-view')
-                <x-navbar-item icon="document">Files</x-navbar-item>
+                <x-navbar-item route="files" icon="document">Files</x-navbar-item>
             @endcan
 
             @can('courses-view')

@@ -5,17 +5,7 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            <x-select
-                label="Filter"
-                placeholder="Select one status"
-                :options="[
-                    ['name' => 'All',  'id' => 'all', 'description' => 'All roles except those in the trash'],
-                    ['name' => 'Trash', 'id' => 'trash', 'description' => 'All roles in the trash'],
-                ]"
-                option-label="name"
-                option-value="id"
-                wire:model="filter"
-            />
+            <x-form.select-all-trash wire:model="filter" />
 
             <div class="flex items-center justify-end gap-5">
                 @can('roles-create')
@@ -100,8 +90,4 @@
             {{ $this->roles->links() }}
         </div>
     </div>
-
-    @push('modals')
-        <x-dialog z-index="z-50" blur="md" align="center" />
-    @endpush
 </div>

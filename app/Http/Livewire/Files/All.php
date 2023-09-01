@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Roles;
+namespace App\Http\Livewire\Files;
 
-use App\Models\Role;
+use App\Models\File;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,6 +13,8 @@ class All extends Component
 
     public $filter = null;
 
+    public array $mimetypes = [];
+
     public $search = '';
 
     protected $queryString = [
@@ -20,20 +22,20 @@ class All extends Component
     ];
 
     protected $listeners = [
-        'roles::created' => '$refresh',
-        'roles::trashed' => '$refresh',
-        'roles::recovered' => '$refresh',
-        'roles::deleted' => '$refresh',
+        'files::created' => '$refresh',
+        'files::trashed' => '$refresh',
+        'files::recovered' => '$refresh',
+        'files::deleted' => '$refresh',
     ];
 
     public function mount()
     {
-        $this->authorize('roles-view');
+        $this->authorize('files-view');
     }
 
     public function render()
     {
-        return view('livewire.roles.all');
+        return view('livewire.files.all');
     }
 
     public function updatingSearch()
@@ -46,14 +48,16 @@ class All extends Component
         $this->resetPage();
     }
 
-    public function getRolesProperty()
+    public function getFilesProperty()
     {
-        return Role::query()
+        return File::query()
             ->when($this->search, function ($query) {
                 $query
                     ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('label', 'LIKE', "%{$this->search}%")
-                    ->orWhere('description', 'LIKE', "%{$this->search}%");
+                    ->orWhere('path', 'LIKE', "%{$this->search}%");
+            })
+            ->when($this->mimetypes, function ($query) {
+                $query->whereIn('mimetype', $this->mimetypes);
             })
             ->when(!$this->filter, function ($query) {
                 $query->withTrashed();
@@ -62,6 +66,6 @@ class All extends Component
                 $query->onlyTrashed();
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(8);
     }
 }

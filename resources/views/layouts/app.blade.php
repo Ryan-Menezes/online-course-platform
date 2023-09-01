@@ -50,6 +50,7 @@
         @stack('modals')
 
         <x-notifications position="top-right" />
+        <x-dialog z-index="z-50" blur="md" align="center" />
 
         @livewireScripts
         @wireUiScripts
