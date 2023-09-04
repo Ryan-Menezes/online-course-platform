@@ -17,8 +17,8 @@
         <x-dropdown align="right">
             @can('files-view')
                 @if ($file->deleted_at)
-                    {{-- <livewire:files.delete wire:key="delete-{{ $file->id }}" :file="$file" />
-                    <livewire:files.recover-from-trash wire:key="recover-from-trash-{{ $file->id }}" :file="$file" /> --}}
+                    {{-- <livewire:files.delete wire:key="delete-{{ $file->id }}" :file="$file" /> --}}
+                    <livewire:files.recover-from-trash wire:key="recover-from-trash-{{ $file->id }}" :file="$file" />
                 @else
                     <livewire:files.move-to-trash wire:key="move-to-trash-{{ $file->id }}" :file="$file" />
                 @endif
