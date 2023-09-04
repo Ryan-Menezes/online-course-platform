@@ -39,7 +39,7 @@ class Create extends Component
 
         $this->emitTo(All::class, 'files::created');
         $this->notification()->success('Files created success');
-        $this->reset();
+        $this->reset('files');
     }
 
     private function uploadAndSaveFiles(): void

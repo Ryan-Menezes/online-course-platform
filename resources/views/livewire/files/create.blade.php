@@ -1,5 +1,5 @@
-<div>
-    <x-input type="file" multiple wire:model="files" label="Files" name="files">
+<x-files.progressbar>
+    <x-input type="file" multiple wire:model.defer="files" label="Files" name="files">
         <x-slot name="append">
             <div class="absolute inset-y-0 right-0 flex items-center p-0.5">
                 <x-button
@@ -15,4 +15,4 @@
             </div>
         </x-slot>
     </x-input>
-</div>
+</x-files.progressbar>
