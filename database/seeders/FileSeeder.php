@@ -10,6 +10,8 @@ class FileSeeder extends Seeder
 {
     public function run(): void
     {
-        File::factory(10)->create();
+        File::factory(10)->create([
+            'path' => fake()->imageUrl(),
+        ]);
     }
 }

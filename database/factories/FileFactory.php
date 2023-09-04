@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 
 class FileFactory extends Factory
 {
@@ -11,7 +12,7 @@ class FileFactory extends Factory
         return [
             'name' => fake()->sentence(),
             'mimetype' => fake()->mimeType(),
-            'path' => fake()->imageUrl(),
+            'path' => UploadedFile::fake()->image(uniqid('file-'))->store('test'),
         ];
     }
 }
