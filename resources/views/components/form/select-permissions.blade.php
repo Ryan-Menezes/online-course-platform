@@ -1,6 +1,6 @@
 <x-select
-    label="Role"
-    placeholder="Select some role"
+    label="Permissions"
+    placeholder="Select permissions"
     multiselect
     option-label="label"
     option-value="name"

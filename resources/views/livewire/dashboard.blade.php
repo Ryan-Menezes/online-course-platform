@@ -1,20 +1,14 @@
-<div>
-    <div class="grid grid-cols-3 gap-5">
+<div class="grid grid-cols-3 gap-5">
+    @for($i = 0; $i < 3; $i++)
+        <figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+            <a href="#">
+                <img class="rounded-lg h-60 object-cover object-center" src="https://kinsta.com/pt/wp-content/uploads/sites/3/2019/05/o-que-php-1024x512.png" alt="image description">
+            </a>
+            <figcaption class="absolute px-4 text-lg text-white bottom-6">
+                <h2 class="text-2xl mb-3 font-bold">Curso de PHP Avançado</h2>
 
-        @for($i = 0; $i < 3; $i++)
-        <a href="">
-            <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <img class="rounded-t-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
-
-                <div class="p-5">
-                    <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-
-                    <p class="text-sm font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                </div>
-            </div>
-        </a>
-        @endfor
-
-    </div>
-
+                <p>Do you want to get notified when a new component is added to Flowbite?</p>
+            </figcaption>
+        </figure>
+    @endfor
 </div>

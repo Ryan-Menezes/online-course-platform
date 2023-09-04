@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Course;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Content;
+use App\Models\Section;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,12 +17,13 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class)->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Section::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class, 'file_video_id')->nullable()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->text('description');
             $table->string('iframe')->nullable();
+            $table->boolean('visibled')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

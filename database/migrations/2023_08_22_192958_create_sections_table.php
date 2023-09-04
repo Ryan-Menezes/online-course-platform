@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\File;
+use App\Models\Course;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(File::class, 'file_certificate_id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Course::class)->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
-            $table->text('description');
+            $table->unsignedSmallInteger('order');
             $table->boolean('visibled')->default(true);
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('sections');
     }
 };
