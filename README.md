@@ -12,10 +12,10 @@ Access the root directory of the project through your terminal and run the comma
 ```sh
 php artisan migrate --seed
 ```
-Have [NodeJS](https://nodejs.org/en) installed on your machine and run the commands "npm install" and "npm run build" in your terminal:
+Have [NodeJS](https://nodejs.org/en) installed on your machine and run the commands "npm install" and "npm run dev" in your terminal:
 ```sh
 npm run install
-npm run build
+npm run dev
 ```
 Finally, run the command "php artisan serve", to run the system locally on your computer:
 ```sh
