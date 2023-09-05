@@ -12,7 +12,7 @@ class FileFactory extends Factory
         return [
             'name' => fake()->sentence(),
             'mimetype' => fake()->mimeType(),
-            'path' => UploadedFile::fake()->image(uniqid('file-'))->store('test'),
+            'path' => UploadedFile::fake()->image(uniqid())->store('test'),
         ];
     }
 }

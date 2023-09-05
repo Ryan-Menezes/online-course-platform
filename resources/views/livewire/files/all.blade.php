@@ -8,7 +8,10 @@
 
         <div class="grid grid-cols-2 items-center pb-4 bg-white dark:bg-gray-900 mt-5">
             <div class="grid grid-cols-2 gap-5">
-                <x-form.select-all-trash wire:model="filter" />
+                @can(['files-create', 'files-edit', 'files-delete'])
+                    <x-form.select-all-trash wire:model="filter" />
+                @endcan
+
                 <x-files.select-mimetypes wire:model="mimetypes" />
             </div>
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Roles;
+namespace App\Http\Livewire\Courses;
 
-use App\Models\Role;
+use App\Models\Course;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,20 +20,20 @@ class All extends Component
     ];
 
     protected $listeners = [
-        'roles::created' => '$refresh',
-        'roles::trashed' => '$refresh',
-        'roles::recovered' => '$refresh',
-        'roles::deleted' => '$refresh',
+        'courses::created' => '$refresh',
+        'courses::trashed' => '$refresh',
+        'courses::recovered' => '$refresh',
+        'courses::deleted' => '$refresh',
     ];
 
     public function mount()
     {
-        $this->authorize('roles-view');
+        $this->authorize('courses-view');
     }
 
     public function render()
     {
-        return view('livewire.roles.all');
+        return view('livewire.courses.all');
     }
 
     public function updatingSearch()
@@ -46,17 +46,17 @@ class All extends Component
         $this->resetPage();
     }
 
-    public function getRolesProperty()
+    public function getCoursesProperty()
     {
-        return Role::query()
+        return Course::query()
             ->when($this->search, function ($query) {
                 $query
-                    ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('label', 'LIKE', "%{$this->search}%")
+                    ->where('title', 'LIKE', "%{$this->search}%")
                     ->orWhere('description', 'LIKE', "%{$this->search}%");
             })
             ->filter($this->filter)
+            ->with('thumb')
             ->latest()
-            ->paginate(10);
+            ->paginate(9);
     }
 }

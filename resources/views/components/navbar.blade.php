@@ -14,7 +14,7 @@
             @endcan
 
             @can('courses-view')
-                <x-navbar-item icon="academic-cap">Courses</x-navbar-item>
+                <x-navbar-item route="courses" icon="academic-cap">Courses</x-navbar-item>
             @endcan
 
             @can('roles-view')

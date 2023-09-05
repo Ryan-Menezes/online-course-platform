@@ -54,12 +54,7 @@ class All extends Component
                     ->where('name', 'LIKE', "%{$this->search}%")
                     ->orWhere('email', 'LIKE', "%{$this->search}%");
             })
-            ->when(!$this->filter, function ($query) {
-                $query->withTrashed();
-            })
-            ->when($this->filter === 'trash', function ($query) {
-                $query->onlyTrashed();
-            })
+            ->filter($this->filter)
             ->with('role')
             ->latest()
             ->paginate(10);

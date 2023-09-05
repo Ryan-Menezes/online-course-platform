@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignIdFor(File::class, 'file_certificate_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->text('description');
-            $table->boolean('visibled')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

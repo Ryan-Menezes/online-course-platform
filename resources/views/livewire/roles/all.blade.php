@@ -5,7 +5,9 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            <x-form.select-all-trash wire:model="filter" />
+            @can(['roles-create', 'roles-edit', 'roles-delete'])
+                <x-form.select-all-trash wire:model="filter" />
+            @endcan
 
             <div class="flex items-center justify-end gap-5">
                 @can('roles-create')

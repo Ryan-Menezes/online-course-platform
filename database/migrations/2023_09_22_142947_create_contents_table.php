@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('iframe')->nullable();
-            $table->boolean('visibled')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

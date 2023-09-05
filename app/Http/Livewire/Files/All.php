@@ -59,12 +59,7 @@ class All extends Component
             ->when($this->mimetypes, function ($query) {
                 $query->whereIn('mimetype', $this->mimetypes);
             })
-            ->when(!$this->filter, function ($query) {
-                $query->withTrashed();
-            })
-            ->when($this->filter === 'trash', function ($query) {
-                $query->onlyTrashed();
-            })
+            ->filter($this->filter)
             ->latest()
             ->paginate(8);
     }
