@@ -19,7 +19,7 @@ class All extends Component
 
     public function mount()
     {
-        $this->authorize('viewAny', auth()->user());
+        $this->authorize('permissions-view');
     }
 
     public function render()
