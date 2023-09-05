@@ -5,9 +5,9 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            @can(['users-create', 'users-edit', 'users-delete'])
+            @canany(['users-create', 'users-edit', 'users-delete'])
                 <x-form.select-all-trash wire:model="filter" />
-            @endcan
+            @endcanany
 
             <div class="flex items-center justify-end gap-5">
                 @can('users-create')
@@ -53,7 +53,7 @@
                             {{ $user->email }}
                         </x-table.td>
                         <x-table.td>
-                            <x-badge rounded positive label="{{ $user->role->label }}" />
+                            <x-badge rounded outline label="{{ $user->role->label }}" />
                         </x-table.td>
                         <x-table.td>
                             {{ $user->created_at }}
@@ -63,27 +63,28 @@
                         </x-table.td>
                         <x-table.td>
                             @if ($user->deleted_at)
-                                <x-icon name="check-circle" class="w-5 h-5 text-green-600" />
+                                <x-badge icon="check" flat rounded positive label="Positive" />
                             @else
-                                <x-icon name="x-circle" class="w-5 h-5 text-red-600" />
+                                <x-badge icon="x" flat rounded negative label="Negative" />
                             @endif
                         </x-table.td>
                         <x-table.td>
-                            <x-dropdown align="right">
-                                @can('users-edit')
-                                    <x-dropdown.item icon="pencil" label="Edit" href="{{ route('users.edit', $user) }}" />
-                                @endcan
+                            @canany(['users-edit', 'users-delete'])
+                                <x-dropdown align="right">
+                                    @can('users-edit')
+                                        <x-dropdown.item icon="pencil" label="Edit" href="{{ route('users.edit', $user) }}" />
+                                    @endcan
 
-                                @can('users-delete')
-                                    @if ($user->deleted_at)
-
-                                        <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />
-                                        <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
-                                    @else
-                                        <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
-                                    @endif
-                                @endcan
-                            </x-dropdown>
+                                    @can('users-delete')
+                                        @if ($user->deleted_at)
+                                            <livewire:users.delete wire:key="delete-{{ $user->id }}" :user="$user" />
+                                            <livewire:users.recover-from-trash wire:key="recover-from-trash-{{ $user->id }}" :user="$user" />
+                                        @else
+                                            <livewire:users.move-to-trash wire:key="move-to-trash-{{ $user->id }}" :user="$user" />
+                                        @endif
+                                    @endcan
+                                </x-dropdown>
+                            @endcanany
                         </x-table.td>
                     </tr>
                 @endforeach

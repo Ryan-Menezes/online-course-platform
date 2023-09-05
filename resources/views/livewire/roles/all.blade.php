@@ -5,9 +5,9 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            @can(['roles-create', 'roles-edit', 'roles-delete'])
+            @canany(['roles-create', 'roles-edit', 'roles-delete'])
                 <x-form.select-all-trash wire:model="filter" />
-            @endcan
+            @endcanany
 
             <div class="flex items-center justify-end gap-5">
                 @can('roles-create')
@@ -62,26 +62,28 @@
                         </x-table.td>
                         <x-table.td>
                             @if ($role->deleted_at)
-                                <x-icon name="check-circle" class="w-5 h-5 text-green-600" />
+                                <x-badge icon="check" flat rounded positive label="Positive" />
                             @else
-                                <x-icon name="x-circle" class="w-5 h-5 text-red-600" />
+                                <x-badge icon="x" flat rounded negative label="Negative" />
                             @endif
                         </x-table.td>
                         <x-table.td>
-                            <x-dropdown align="right">
-                                @can('roles-edit')
-                                    <x-dropdown.item icon="pencil" label="Edit" href="{{ route('roles.edit', $role) }}" />
-                                @endcan
+                            @canany(['roles-edit', 'roles-delete'])
+                                <x-dropdown align="right">
+                                    @can('roles-edit')
+                                        <x-dropdown.item icon="pencil" label="Edit" href="{{ route('roles.edit', $role) }}" />
+                                    @endcan
 
-                                @can('roles-view')
-                                    @if ($role->deleted_at)
-                                        <livewire:roles.delete wire:key="delete-{{ $role->id }}" :role="$role" />
-                                        <livewire:roles.recover-from-trash wire:key="recover-from-trash-{{ $role->id }}" :role="$role" />
-                                    @else
-                                        <livewire:roles.move-to-trash wire:key="move-to-trash-{{ $role->id }}" :role="$role" />
-                                    @endif
-                                @endcan
-                            </x-dropdown>
+                                    @can('roles-delete')
+                                        @if ($role->deleted_at)
+                                            <livewire:roles.delete wire:key="delete-{{ $role->id }}" :role="$role" />
+                                            <livewire:roles.recover-from-trash wire:key="recover-from-trash-{{ $role->id }}" :role="$role" />
+                                        @else
+                                            <livewire:roles.move-to-trash wire:key="move-to-trash-{{ $role->id }}" :role="$role" />
+                                        @endif
+                                    @endcan
+                                </x-dropdown>
+                            @endcanany
                         </x-table.td>
                     </tr>
                 @endforeach

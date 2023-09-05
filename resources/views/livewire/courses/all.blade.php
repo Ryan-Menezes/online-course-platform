@@ -5,9 +5,9 @@
 
     <div class="relative">
         <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
-            @can(['courses-create', 'courses-edit', 'courses-delete'])
+            @canany(['courses-create', 'courses-edit', 'courses-delete'])
                 <x-form.select-all-trash wire:model="filter" />
-            @endcan
+            @endcanany
 
             <div class="flex items-center justify-end gap-5">
                 @can('courses-create')

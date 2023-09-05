@@ -14,15 +14,15 @@
             <p class="mt-1 text-sm text-gray-500">{{ $file->mimetype }}</p>
         </div>
 
-        <x-dropdown align="right">
-            @can('files-view')
+        @can('files-delete')
+            <x-dropdown align="right">
                 @if ($file->deleted_at)
                     <livewire:files.delete wire:key="delete-{{ $file->id }}" :file="$file" />
                     <livewire:files.recover-from-trash wire:key="recover-from-trash-{{ $file->id }}" :file="$file" />
                 @else
                     <livewire:files.move-to-trash wire:key="move-to-trash-{{ $file->id }}" :file="$file" />
                 @endif
-            @endcan
-        </x-dropdown>
+            </x-dropdown>
+        @endcan
     </div>
 </div>

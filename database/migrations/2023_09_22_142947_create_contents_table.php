@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('iframe')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('content_file', function (Blueprint $table) {

@@ -12,8 +12,11 @@ class CourseFactory extends Factory
 {
     public function definition(): array
     {
+        $title = fake()->sentence();
+
         return [
-            'title' => fake()->sentence(),
+            'title' => $title,
+            'slug' => str($title)->slug(),
             'description' => fake()->sentence(),
             'file_thumb_id' => File::factory()->create()->id,
             'file_certificate_id' => File::factory()->create()->id,

@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(File::class, 'file_certificate_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description');
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

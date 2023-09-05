@@ -16,6 +16,7 @@ class All extends Component
     public $search = '';
 
     protected $queryString = [
+        'filter' => ['except' => ''],
         'search' => ['except' => ''],
     ];
 

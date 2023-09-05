@@ -4,13 +4,15 @@
     </x-slot>
 
     <div class="relative">
-        <livewire:files.create />
+        @can('files-create')
+            <livewire:files.create />
+        @endcan
 
         <div class="grid grid-cols-2 items-center pb-4 bg-white dark:bg-gray-900 mt-5">
             <div class="grid grid-cols-2 gap-5">
-                @can(['files-create', 'files-edit', 'files-delete'])
+                @canany(['files-create', 'files-edit', 'files-delete'])
                     <x-form.select-all-trash wire:model="filter" />
-                @endcan
+                @endcanany
 
                 <x-files.select-mimetypes wire:model="mimetypes" />
             </div>
