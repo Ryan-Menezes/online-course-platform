@@ -8,7 +8,7 @@
             <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />
         </div>
 
-        <x-table>
+        <x-table wire:loading.remove wire:target="search">
             <x-table.thead>
                 <tr>
                     <x-table.th>
@@ -51,7 +51,9 @@
             </tbody>
         </x-table>
 
-        <div class="mt-5">
+        <x-loading-spinner wire:loading wire:target="search" />
+
+        <div class="mt-5" wire:loading.remove wire:target="search">
             {{ $this->permissions->links() }}
         </div>
     </div>

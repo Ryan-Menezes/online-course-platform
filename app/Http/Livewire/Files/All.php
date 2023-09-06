@@ -49,6 +49,11 @@ class All extends Component
         $this->resetPage();
     }
 
+    public function updatingMimetypes()
+    {
+        $this->resetPage();
+    }
+
     public function getFilesProperty()
     {
         return File::query()

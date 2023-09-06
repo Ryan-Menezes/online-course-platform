@@ -22,13 +22,15 @@
             </div>
         </div>
 
-        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8" wire:loading.remove wire:target="filter, mimetypes, search">
             @foreach($this->files as $file)
                 <x-files.card :file="$file" />
             @endforeach
         </div>
 
-        <div class="mt-10">
+        <x-loading-spinner wire:loading wire:target="filter, mimetypes, search" />
+
+        <div class="mt-10" wire:loading.remove wire:target="filter, mimetypes, search">
             {{ $this->files->links() }}
         </div>
     </div>

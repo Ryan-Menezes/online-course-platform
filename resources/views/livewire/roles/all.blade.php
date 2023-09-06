@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <x-table>
+        <x-table wire:loading.remove wire:target="filter, search">
             <x-table.thead>
                 <tr>
                     <x-table.th>
@@ -90,7 +90,9 @@
             </tbody>
         </x-table>
 
-        <div class="mt-5">
+        <x-loading-spinner wire:loading wire:target="filter, search" />
+
+        <div class="mt-5" wire:loading.remove wire:target="filter, search">
             {{ $this->roles->links() }}
         </div>
     </div>

@@ -18,13 +18,15 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-5">
+        <div class="grid grid-cols-3 gap-5" wire:loading.remove wire:target="filter, search">
             @foreach($this->courses as $course)
                 <x-courses.card :course="$course" />
             @endforeach
         </div>
 
-        <div class="mt-5">
+        <x-loading-spinner wire:loading wire:target="filter, search" />
+
+        <div class="mt-5" wire:loading.remove wire:target="filter, search">
             {{ $this->courses->links() }}
         </div>
     </div>
