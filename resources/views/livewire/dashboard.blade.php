@@ -1,14 +1,14 @@
-<div class="grid grid-cols-3 gap-5">
-    @for($i = 0; $i < 3; $i++)
-        <figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter">
-            <a href="#">
-                <img class="rounded-lg h-60 object-cover object-center contrast-75" src="https://kinsta.com/pt/wp-content/uploads/sites/3/2019/05/o-que-php-1024x512.png" alt="image description">
-            </a>
-            <figcaption class="absolute px-4 text-lg text-white bottom-6">
-                <h2 class="text-2xl mb-3 font-bold">Curso de PHP Avançado</h2>
+<div>
+    <x-slot name="header">
+        {{ __('Dashboard') }}
+    </x-slot>
 
-                <p>Do you want to get notified when a new component is added to Flowbite?</p>
-            </figcaption>
-        </figure>
-    @endfor
+    <h2 class="mb-9 text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white">Recent <span class="bg-blue-100 text-blue-800 font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">Courses</span></h1>
+
+    <div class="grid grid-cols-3 gap-5">
+        @foreach($this->recentCourses as $course)
+            <x-courses.card :course="$course" />
+        @endforeach
+    </div>
 </div>
+
