@@ -57,14 +57,8 @@ class All extends Component
     public function getFilesProperty()
     {
         return File::query()
-            ->when($this->search, function ($query) {
-                $query
-                    ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('path', 'LIKE', "%{$this->search}%");
-            })
-            ->when($this->mimetypes, function ($query) {
-                $query->whereIn('mimetype', $this->mimetypes);
-            })
+            ->search($this->search)
+            ->mimetypes($this->mimetypes)
             ->filter($this->filter)
             ->latest()
             ->paginate(8);

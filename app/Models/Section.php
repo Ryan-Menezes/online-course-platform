@@ -12,6 +12,8 @@ class Section extends Model
 {
     use HasFactory, FilterScope;
 
+    private array $permissions = ['courses-create', 'courses-edit', 'courses-delete'];
+
     public function course(): HasOne
     {
         return $this->hasOne(Course::class);

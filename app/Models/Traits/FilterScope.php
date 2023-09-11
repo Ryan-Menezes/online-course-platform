@@ -11,7 +11,7 @@ trait FilterScope
     {
         $query
             ->when(
-                Gate::any(['courses-create', 'courses-edit', 'courses-delete']),
+                Gate::any($this->permissions ?? []),
                 function ($query) use ($filter) {
                     $query
                         ->when(!$filter, function ($query) {

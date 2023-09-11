@@ -50,11 +50,7 @@ class All extends Component
     public function getUsersProperty()
     {
         return User::query()
-            ->when($this->search, function ($query) {
-                $query
-                    ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('email', 'LIKE', "%{$this->search}%");
-            })
+            ->search($this->search)
             ->filter($this->filter)
             ->with('role')
             ->latest()

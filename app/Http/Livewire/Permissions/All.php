@@ -40,12 +40,7 @@ class All extends Component
     public function getPermissionsProperty()
     {
         return Permission::query()
-            ->when($this->search, function ($query) {
-                $query
-                    ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('label', 'LIKE', "%{$this->search}%")
-                    ->orWhere('description', 'LIKE', "%{$this->search}%");
-            })
+            ->search($this->search)
             ->paginate(10);
     }
 }

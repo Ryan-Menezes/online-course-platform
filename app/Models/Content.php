@@ -12,6 +12,8 @@ class Content extends Model
 {
     use HasFactory, FilterScope;
 
+    private array $permissions = ['courses-create', 'courses-edit', 'courses-delete'];
+
     public function thumb(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_thumb_id');

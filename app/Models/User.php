@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Traits\FilterScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +24,8 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use SoftDeletes;
     use FilterScope;
+
+    private array $permissions = ['users-create', 'users-edit', 'users-delete'];
 
     protected $fillable = [
         'name',
@@ -64,5 +67,14 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role->name === 'admin';
+    }
+
+    public function scopeSearch(Builder $query, ?string $search): void
+    {
+        $query->when($search, function (Builder $query) use ($search) {
+            $query
+                ->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        });
     }
 }

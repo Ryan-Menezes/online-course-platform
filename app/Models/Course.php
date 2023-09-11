@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\FilterScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Course extends Model
 {
     use HasFactory, SoftDeletes, FilterScope;
+
+    private array $permissions = ['courses-create', 'courses-edit', 'courses-delete'];
 
     public function thumb(): BelongsTo
     {
@@ -32,5 +35,14 @@ class Course extends Model
     public function contents(): HasManyThrough
     {
         return $this->hasManyThrough(Content::class, Section::class);
+    }
+
+    public function scopeSearch(Builder $query, ?string $search): void
+    {
+        $query->when($search, function (Builder $query) use ($search) {
+            $query
+                ->where('title', 'LIKE', "%{$search}%")
+                ->orWhere('description', 'LIKE', "%{$search}%");
+        });
     }
 }

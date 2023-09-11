@@ -50,11 +50,7 @@ class All extends Component
     public function getCoursesProperty()
     {
         return Course::query()
-            ->when($this->search, function ($query) {
-                $query
-                    ->where('title', 'LIKE', "%{$this->search}%")
-                    ->orWhere('description', 'LIKE', "%{$this->search}%");
-            })
+            ->search($this->search)
             ->filter($this->filter)
             ->with('thumb')
             ->latest()
