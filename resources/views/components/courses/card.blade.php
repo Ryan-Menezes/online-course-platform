@@ -43,7 +43,7 @@
 
                         @can('courses-delete')
                             @if ($course->deleted_at)
-                                {{-- <livewire:courses.delete wire:key="delete-{{ $course->id }}" :course="$course" /> --}}
+                                <livewire:courses.delete wire:key="delete-{{ $course->id }}" :course="$course" />
                                 <livewire:courses.recover-from-trash wire:key="recover-from-trash-{{ $course->id }}" :course="$course" />
                             @else
                                 <livewire:courses.move-to-trash wire:key="move-to-trash-{{ $course->id }}" :course="$course" />
