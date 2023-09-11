@@ -11,7 +11,7 @@
 
             <div class="flex items-center justify-end gap-5">
                 @can('courses-create')
-                    {{-- <livewire:courses.create /> --}}
+                    <x-button primary rounded href="{{ route('courses.create') }}">Novo</x-button>
                 @endcan
 
                 <x-input icon="search" name="search" placeholder="Search" wire:model.lazy="search" />

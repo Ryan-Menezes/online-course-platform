@@ -5,6 +5,7 @@ use App\Http\Livewire\Users\All as UsersAll;
 use App\Http\Livewire\Users\Edit as UsersEdit;
 use App\Http\Livewire\Files\All as FilesAll;
 use App\Http\Livewire\Courses\All as CoursesAll;
+use App\Http\Livewire\Courses\Create as CoursesCreate;
 use App\Http\Livewire\Roles\All as RolesAll;
 use App\Http\Livewire\Roles\Edit as RolesEdit;
 use App\Http\Livewire\Permissions\All as PermissionsAll;
@@ -21,6 +22,7 @@ Route::middleware([
     Route::get('/files', FilesAll::class)->name('files');
     Route::get('/roles', RolesAll::class)->name('roles');
     Route::get('/courses', CoursesAll::class)->name('courses');
+    Route::get('/courses/create', CoursesCreate::class)->name('courses.create');
     Route::get('/roles/{role}', RolesEdit::class)->name('roles.edit')->withTrashed();
     Route::get('/permissions', PermissionsAll::class)->name('permissions');
 });
