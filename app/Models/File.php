@@ -33,6 +33,17 @@ class File extends Model
         });
     }
 
+    public function thumb(): Attribute
+    {
+        return Attribute::get(function () {
+            if ($this->isImage()) {
+                return $this->url;
+            }
+
+            return url('assets/img/file.png');
+        });
+    }
+
     public function isImage(): bool
     {
         return str($this->mimetype)->startsWith('image/');
