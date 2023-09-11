@@ -44,7 +44,7 @@ class Create extends Component
 
         $this->emitTo(All::class, 'roles::created');
         $this->notification()->success('Role created success');
-        $this->reset();
+        $this->resetExcept();
     }
 
     private function isAuthorizable()

@@ -49,9 +49,10 @@ class Create extends Component
         $data = $this->validate();
 
         Course::query()->create([
+            ...$data,
             'file_thumb_id' => $this->thumb->id,
             'file_certificate_id' => $this->certificate->id,
-            ...$data,
+            'slug' => str($this->slug)->slug(),
         ]);
 
         $this->emitTo(All::class, 'courses::created');

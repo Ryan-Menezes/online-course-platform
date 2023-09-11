@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(File::class, 'file_certificate_id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(File::class, 'file_thumb_id')->references('id')->on('files')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(File::class, 'file_certificate_id')->references('id')->on('files')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');

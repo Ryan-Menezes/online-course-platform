@@ -50,9 +50,9 @@ class All extends Component
     public function getCoursesProperty()
     {
         return Course::query()
+            ->with(['thumb', 'sections', 'contents'])
             ->search($this->search)
             ->filter($this->filter)
-            ->with('thumb')
             ->latest()
             ->paginate(9);
     }

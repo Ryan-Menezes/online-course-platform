@@ -50,9 +50,9 @@ class All extends Component
     public function getUsersProperty()
     {
         return User::query()
+            ->with('role')
             ->search($this->search)
             ->filter($this->filter)
-            ->with('role')
             ->latest()
             ->paginate(10);
     }

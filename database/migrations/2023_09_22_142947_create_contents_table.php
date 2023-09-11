@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Section::class)->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(File::class, 'file_thumb_id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(File::class, 'file_video_id')->nullable()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Section::class)->references('id')->on('sections')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(File::class, 'file_thumb_id')->references('id')->on('files')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(File::class, 'file_video_id')->nullable()->references('id')->on('files')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->text('description');
             $table->string('iframe')->nullable();
@@ -28,13 +28,13 @@ return new class extends Migration
         });
 
         Schema::create('content_file', function (Blueprint $table) {
-            $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(File::class)->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Content::class)->references('id')->on('contents')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(File::class)->references('id')->on('files')->cascadeOnDelete()->cascadeOnUpdate();
         });
 
         Schema::create('content_viewed', function (Blueprint $table) {
-            $table->foreignIdFor(Content::class)->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(User::class)->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Content::class)->references('id')->on('contents')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(User::class)->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

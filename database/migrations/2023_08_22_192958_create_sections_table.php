@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class)->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Course::class)->references('id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->unsignedSmallInteger('order');
             $table->boolean('active')->default(true);

@@ -23,8 +23,8 @@ return new class extends Migration
         });
 
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->foreignIdFor(Permission::class)->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(Role::class)->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Permission::class)->references('id')->on('permissions')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Role::class)->references('id')->on('roles')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

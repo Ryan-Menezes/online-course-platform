@@ -14,6 +14,10 @@ class Dashboard extends Component
 
     public function getRecentCoursesProperty()
     {
-        return Course::query()->latest()->limit(9)->get();
+        return Course::query()
+            ->with(['thumb', 'sections', 'contents'])
+            ->latest()
+            ->limit(9)
+            ->get();
     }
 }
