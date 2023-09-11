@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Livewire\Courses\All;
 use App\Http\Livewire\Courses\Create;
 use App\Models\Course;
 use App\Models\File;
@@ -38,8 +37,7 @@ it('should create a new course', function () {
         ->set('slug', 'test')
         ->set('description', 'Test create')
         ->set('active', true)
-        ->call('save')
-        ->assertEmittedTo(All::class, 'courses::created');
+        ->call('save');
 
     assertDatabaseCount('courses', 1);
     assertDatabaseHas('courses', [

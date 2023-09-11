@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Course::class)->references('id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->unsignedSmallInteger('order');
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

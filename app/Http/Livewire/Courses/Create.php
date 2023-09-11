@@ -15,7 +15,7 @@ class Create extends Component
     public ?string $title = null;
     public ?string $slug = null;
     public ?string $description = null;
-    public bool $active = true;
+    public bool $active = false;
     public ?File $thumb = null;
     public ?File $certificate = null;
 
@@ -53,9 +53,9 @@ class Create extends Component
             'file_thumb_id' => $this->thumb->id,
             'file_certificate_id' => $this->certificate->id,
             'slug' => str($this->slug)->slug(),
+            'active' => $this->active,
         ]);
 
-        $this->emitTo(All::class, 'courses::created');
         $this->notification()->success('Course created success');
         $this->resetExcept();
     }
