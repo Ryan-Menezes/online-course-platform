@@ -13,17 +13,11 @@
 
         <div class="flex justify-between items-center mt-4">
             <div class="flex">
-                @canany(['courses-create', 'courses-edit', 'courses-delete'])
-                    @if($course->active)
-                        <div class="flex items-center mr-5">
-                            <x-icon name="check-circle" class="w-5 h-5 text-green-600" />
-                        </div>
-                    @else
-                        <div class="flex items-center mr-5">
-                            <x-icon name="x-circle" class="w-5 h-5 text-red-600" />
-                        </div>
-                    @endif
-                @endcanany
+                @can('courses-edit')
+                    <div class="flex items-center mr-2">
+                        <livewire:courses.active-toggle wire:key="active-toggle-{{ $course->id }}" :course="$course" />
+                    </div>
+                @endcan
 
                 <div class="flex items-center">
                     <span>{{ $course->sections->count() }}</span>
