@@ -31,8 +31,8 @@ it('should create a new course', function () {
     $certificate = File::factory()->create();
 
     Livewire::test(Create::class)
-        ->set('thumb', $thumb)
-        ->set('certificate', $certificate)
+        ->set('file_thumb_id', $thumb->id)
+        ->set('file_certificate_id', $certificate->id)
         ->set('title', 'Test')
         ->set('slug', 'test')
         ->set('description', 'Test create')
@@ -60,8 +60,8 @@ it('should not create a new course if the user does not have authorization', fun
     $certificate = File::factory()->create();
 
     Livewire::test(Create::class)
-        ->set('thumb', $thumb)
-        ->set('certificate', $certificate)
+        ->set('file_thumb_id', $thumb->id)
+        ->set('file_certificate_id', $certificate->id)
         ->set('title', 'Test')
         ->set('slug', 'test')
         ->set('description', 'Test create')
@@ -163,6 +163,48 @@ test('the course description should be less than 300 characters long', function 
         ->call('save')
         ->assertHasErrors([
             'description' => 'max:300',
+        ]);
+
+    assertDatabaseCount('courses', 0);
+});
+
+test('the file thumb id should be required', function () {
+    Livewire::test(Create::class)
+        ->call('save')
+        ->assertHasErrors([
+            'file_thumb_id' => 'required',
+        ]);
+
+    assertDatabaseCount('courses', 0);
+});
+
+test('the file thumb id should exist on files table', function () {
+    Livewire::test(Create::class)
+        ->set('file_thumb_id', 'invalid_id')
+        ->call('save')
+        ->assertHasErrors([
+            'file_thumb_id' => 'exists:files',
+        ]);
+
+    assertDatabaseCount('courses', 0);
+});
+
+test('the file certificate id should be required', function () {
+    Livewire::test(Create::class)
+        ->call('save')
+        ->assertHasErrors([
+            'file_certificate_id' => 'required',
+        ]);
+
+    assertDatabaseCount('courses', 0);
+});
+
+test('the file certificate id should exist on files table', function () {
+    Livewire::test(Create::class)
+        ->set('file_certificate_id', 'invalid_id')
+        ->call('save')
+        ->assertHasErrors([
+            'file_certificate_id' => 'exists:files',
         ]);
 
     assertDatabaseCount('courses', 0);

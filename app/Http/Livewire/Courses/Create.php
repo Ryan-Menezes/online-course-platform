@@ -16,8 +16,8 @@ class Create extends Component
     public ?string $slug = null;
     public ?string $description = null;
     public bool $active = false;
-    public ?File $thumb = null;
-    public ?File $certificate = null;
+    public ?string $file_thumb_id = null;
+    public ?string $file_certificate_id = null;
 
     protected function rules(): array
     {
@@ -25,6 +25,8 @@ class Create extends Component
             'title' => ['required', 'string', 'max:191'],
             'slug' => ['required', 'string', 'max:191', 'unique:courses'],
             'description' => ['required', 'string', 'max:300'],
+            'file_thumb_id' => ['required', 'exists:files,id'],
+            'file_certificate_id' => ['required', 'exists:files,id'],
         ];
     }
 
@@ -50,8 +52,6 @@ class Create extends Component
 
         Course::query()->create([
             ...$data,
-            'file_thumb_id' => $this->thumb->id,
-            'file_certificate_id' => $this->certificate->id,
             'slug' => str($this->slug)->slug(),
             'active' => $this->active,
         ]);
