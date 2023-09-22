@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\FilterScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,12 @@ class Course extends Model
 {
     use HasFactory, SoftDeletes, FilterScope;
 
-    private array $permissions = ['courses-create', 'courses-edit', 'courses-delete'];
+    public array $permissions = ['courses-create', 'courses-edit', 'courses-delete'];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
 
     public function thumb(): BelongsTo
     {
