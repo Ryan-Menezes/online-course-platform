@@ -24,7 +24,6 @@ class Select extends Component
                 $query->where('mimetype', 'LIKE', "%{$this->mimetype}%");
             })
             ->latest()
-            ->limit(50)
             ->get();
     }
 

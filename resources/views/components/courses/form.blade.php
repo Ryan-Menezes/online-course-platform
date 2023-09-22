@@ -10,7 +10,7 @@
 
         <x-files.select label="Thumb" placeholder="Select a thumb" mimetype="image" wire:model.defer="file_thumb_id" />
 
-        <x-files.select label="Certificate" placeholder="Select a certificate" wire:model.defer="file_certificate_id" />
+        <x-files.select label="Certificate" placeholder="Select a certificate" mimetype="application/pdf" wire:model.defer="file_certificate_id" />
 
         <div class="col-span-1 sm:col-span-2">
             <x-textarea label="Description" placeholder="Description" wire:model="description" />
