@@ -20,6 +20,7 @@ class CourseFactory extends Factory
             'description' => fake()->sentence(),
             'file_thumb_id' => File::factory()->create()->id,
             'file_certificate_id' => File::factory()->create()->id,
+            'active' => fake()->boolean(),
         ];
     }
 }

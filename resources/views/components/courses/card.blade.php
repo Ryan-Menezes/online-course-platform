@@ -32,7 +32,7 @@
                 @canany(['courses-edit', 'courses-delete'])
                     <x-dropdown align="right">
                         @can('courses-edit')
-                            {{-- <x-dropdown.item icon="pencil" label="Edit" href="{{ route('courses.edit', $course) }}" /> --}}
+                            <x-dropdown.item icon="pencil" label="Edit" href="{{ route('courses.edit', $course) }}" />
                         @endcan
 
                         @can('courses-delete')
