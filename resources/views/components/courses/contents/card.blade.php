@@ -4,21 +4,20 @@
     <div class="flex items-center justify-between p-6 w-full">
         <div>
             <h5 class="mb-2 text-xl font-medium text-neutral-800 dark:text-neutral-50">
-                Card title
+                {{ $content->title }}
             </h5>
-            <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">Text</p>
+            <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">{{ $content->description }}</p>
             <p class="text-xs text-neutral-500 dark:text-neutral-300">
-                Last updated 3 mins ago
+                {{ $content->created_at->diffForHumans() }}
             </p>
         </div>
         <div class="flex flex-col justify-between items-end h-full">
             <x-dropdown>
-                <x-dropdown.item label="Settings" />
-                <x-dropdown.item label="My Profile" />
-                <x-dropdown.item label="Logout" />
+                <x-dropdown.item icon="pencil" label="Edit" />
+                <x-dropdown.item icon="trash" label="Delete" />
             </x-dropdown>
 
-            <x-toggle md wire:model.defer="model" />
+            <x-toggle id="active-toggle-content-id-{{ $section->id }}" md wire:model.defer="active" />
         </div>
     </div>
 </div>
