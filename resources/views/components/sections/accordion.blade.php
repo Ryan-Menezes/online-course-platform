@@ -17,7 +17,7 @@
         </div>
 
         @forelse ($section as $content)
-            <x-courses.contents.card :content="$content" />
+            <x-contents.card :content="$content" />
         @empty
             <p>This section doesn't have any contents</p>
         @endforelse
