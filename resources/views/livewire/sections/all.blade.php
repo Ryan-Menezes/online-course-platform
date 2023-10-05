@@ -1,7 +1,7 @@
 <div class="block rounded-lg bg-white border mt-8 dark:bg-neutral-700">
     <div class="border-b-2 border-neutral-100 px-6 py-3 flex justify-between items-center">
         <h5 class="text-xl font-medium leading-tight dark:border-neutral-600 dark:text-neutral-50">
-            Seções
+            Sections
         </h5>
         <div class="flex justify-end items-center gap-5">
             <x-button rounded dark right-icon="plus" label="Add" />

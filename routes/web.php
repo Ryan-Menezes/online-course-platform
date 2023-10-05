@@ -19,12 +19,12 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/users', UsersAll::class)->name('users');
-    Route::get('/users/{user}', UsersEdit::class)->name('users.edit')->withTrashed();
+    Route::get('/users/{user}/edit', UsersEdit::class)->name('users.edit')->withTrashed();
     Route::get('/files', FilesAll::class)->name('files');
     Route::get('/roles', RolesAll::class)->name('roles');
     Route::get('/courses', CoursesAll::class)->name('courses');
     Route::get('/courses/create', CoursesCreate::class)->name('courses.create');
-    Route::get('/courses/{course}', CoursesEdit::class)->name('courses.edit');
-    Route::get('/roles/{role}', RolesEdit::class)->name('roles.edit')->withTrashed();
+    Route::get('/courses/{course}/edit', CoursesEdit::class)->name('courses.edit');
+    Route::get('/roles/{role}/edit', RolesEdit::class)->name('roles.edit')->withTrashed();
     Route::get('/permissions', PermissionsAll::class)->name('permissions');
 });

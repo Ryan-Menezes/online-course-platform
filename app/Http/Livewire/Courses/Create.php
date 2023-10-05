@@ -3,14 +3,14 @@
 namespace App\Http\Livewire\Courses;
 
 use App\Models\Course;
-use App\Models\File;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
 class Create extends Component
 {
-    use Actions;
+    use Actions, AuthorizesRequests;
 
     public ?string $title = null;
     public ?string $slug = null;
@@ -30,6 +30,11 @@ class Create extends Component
         ];
     }
 
+    public function mount()
+    {
+        $this->authorize('courses-create');
+    }
+
     public function render()
     {
         return view('livewire.courses.create');
@@ -44,30 +49,32 @@ class Create extends Component
 
     public function save()
     {
-        if (!$this->isAuthorizable()) {
-            return;
-        }
-
         $data = $this->validate();
 
-        Course::query()->create([
+        $course = Course::query()->create([
             ...$data,
             'slug' => str($this->slug)->slug(),
             'active' => $this->active,
         ]);
 
-        $this->notification()->success('Course created success');
+        $this->notification()->confirm([
+            'title' => 'Course created success',
+            'icon' => 'success',
+            'accept'      => [
+                'label'  => 'Edit secions',
+                'method' => 'redirectEdit',
+                'params' => $course->id,
+            ],
+            'reject' => [
+                'label' => 'Close',
+            ],
+        ]);
+
         $this->resetExcept();
     }
 
-    private function isAuthorizable()
+    public function redirectEdit($id)
     {
-        if (Gate::allows('courses-create')) {
-            return true;
-        }
-
-        $this->dialog()->error('You do not have authorization to perform this action');
-
-        return false;
+        $this->redirectRoute('courses.edit', ['course' => $id]);
     }
 }

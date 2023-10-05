@@ -26,6 +26,16 @@ test('component can render', function () {
         ->assertStatus(200);
 });
 
+test('component cannot render if the user does not have authorization', function () {
+    $user = User::factory()->create();
+    $user->role->permissions()->sync([]);
+
+    actingAs($user);
+
+    Livewire::test(Create::class)
+        ->assertForbidden();
+});
+
 it('should create a new course', function () {
     $thumb = File::factory()->create();
     $certificate = File::factory()->create();
@@ -48,35 +58,6 @@ it('should create a new course', function () {
         'description' => 'Test create',
         'active' => true,
     ]);
-});
-
-it('should not create a new course if the user does not have authorization', function () {
-    $user = User::factory()->create();
-    $user->role->permissions()->sync([]);
-
-    actingAs($user);
-
-    $thumb = File::factory()->create();
-    $certificate = File::factory()->create();
-
-    Livewire::test(Create::class)
-        ->set('file_thumb_id', $thumb->id)
-        ->set('file_certificate_id', $certificate->id)
-        ->set('title', 'Test')
-        ->set('slug', 'test')
-        ->set('description', 'Test create')
-        ->set('active', true)
-        ->call('save');
-
-        assertDatabaseCount('courses', 0);
-        assertDatabaseMissing('courses', [
-            'file_thumb_id' => $thumb->id,
-            'file_certificate_id' => $certificate->id,
-            'title' => 'Test',
-            'slug' => 'test',
-            'description' => 'Test create',
-            'active' => true,
-        ]);
 });
 
 test('when the title changed your value and the slug is empty, the slug should change your value', function () {
