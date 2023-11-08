@@ -11,14 +11,19 @@
         <div class="flex justify-start items-center gap-5">
             <x-dropdown align="left">
                 <x-dropdown.item icon="pencil" label="Edit" />
-                <x-dropdown.item icon="trash" label="Delete" />
+
+                @can('courses-delete')
+                    <livewire:sections.delete :section="$section" />
+                @endcan
             </x-dropdown>
 
-            <livewire:sections.active-toggle :section="$section" />
+            @can('courses-edit')
+                <livewire:sections.active-toggle :section="$section" />
+            @endcan
         </div>
 
         @forelse ($section->contents as $content)
-            <x-contents.card :content="$content" />
+            <x-contents.card :content="$content" wire:key="content-item-{{ $content->id }}" />
         @empty
             <p>This section doesn't have any contents</p>
         @endforelse

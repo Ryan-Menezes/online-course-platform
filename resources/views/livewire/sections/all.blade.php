@@ -3,15 +3,18 @@
         <h5 class="text-xl font-medium leading-tight dark:border-neutral-600 dark:text-neutral-50">
             Sections
         </h5>
-        <div class="flex justify-end items-center gap-5">
-            <livewire:sections.create :course="$course" />
-        </div>
+
+        @can('courses-create')
+            <div class="flex justify-end items-center gap-5">
+                <livewire:sections.create :course="$course" />
+            </div>
+        @endcan
     </div>
 
     <div class="p-6">
         <div>
             @forelse($course->sections as $section)
-                <x-sections.accordion :section="$section" />
+                <x-sections.accordion :section="$section" wire:key="section-item-{{ $section->id }}" />
             @empty
                 <p>This course doesn't have any sections</p>
             @endforelse
