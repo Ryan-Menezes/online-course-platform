@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Courses;
 
 use App\Models\Course;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
