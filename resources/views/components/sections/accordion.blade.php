@@ -16,7 +16,7 @@
             <x-toggle id="active-toggle-section-id-{{ $section->id }}" md wire:model.defer="active" />
         </div>
 
-        @forelse ($section as $content)
+        @forelse ($section->contents as $content)
             <x-contents.card :content="$content" />
         @empty
             <p>This section doesn't have any contents</p>

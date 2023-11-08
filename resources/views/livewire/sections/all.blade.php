@@ -4,7 +4,7 @@
             Sections
         </h5>
         <div class="flex justify-end items-center gap-5">
-            <x-button rounded dark right-icon="plus" label="Add" />
+            <livewire:sections.create :course="$course" />
         </div>
     </div>
 
