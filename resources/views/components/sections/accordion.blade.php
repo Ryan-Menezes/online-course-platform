@@ -13,7 +13,8 @@
                 <x-dropdown.item icon="pencil" label="Edit" />
                 <x-dropdown.item icon="trash" label="Delete" />
             </x-dropdown>
-            <x-toggle id="active-toggle-section-id-{{ $section->id }}" md wire:model.defer="active" />
+
+            <livewire:sections.active-toggle :section="$section" />
         </div>
 
         @forelse ($section->contents as $content)
